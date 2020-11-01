@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Graph_DS implements graph{
 
-    private HashMap<Integer, node_data> v;
+    private final HashMap<Integer, node_data> v;
     private int edges = 0;
     private int nodeSize = 0;
     private int mc = 0;
@@ -36,7 +36,10 @@ public class Graph_DS implements graph{
 
     @Override
     public boolean hasEdge(int node1, int node2) {
-        return getNode(node1).hasNi(node2);
+        node_data n = getNode(node1);
+        if(n != null)
+            return n.hasNi(node2);
+        return false;
     }
 
     @Override
@@ -48,9 +51,12 @@ public class Graph_DS implements graph{
 
     @Override
     public void connect(int node1, int node2) {
-        if(!hasEdge(node1,node2) && node1!=node2){
-            getNode(node1).addNi(getNode(node2));
-            getNode(node2).addNi(getNode(node1));
+        node_data n1 = getNode(node1);
+        node_data n2 = getNode(node2);
+        if(n1==null || n2==null || node1==node2) return;
+        if(!hasEdge(node1,node2)){
+            n1.addNi(n2);
+            n2.addNi(n1);
             edges++;
             mc++;
         }
@@ -84,8 +90,10 @@ public class Graph_DS implements graph{
     @Override
     public void removeEdge(int node1, int node2) {
         if(hasEdge(node1,node2)){
-            getNode(node1).removeNode(getNode(node2));
-            getNode(node2).removeNode(getNode(node1));
+            node_data n1 = getNode(node1);
+            node_data n2 = getNode(node2);
+            n1.removeNode(n2);
+            n2.removeNode(n1);
             mc++;
             edges--;
         }
@@ -109,9 +117,8 @@ public class Graph_DS implements graph{
     @Override
     public String toString() {
         String s = "";
-        for(int key: v.keySet()){
-            s += key+": "+ v.get(key).getNi()+"\n";
-        }
+        for(int key: v.keySet())
+            s += key + ": " + v.get(key).getNi() + "\n";
         return s;
     }
 }

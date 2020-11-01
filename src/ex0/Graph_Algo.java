@@ -1,7 +1,6 @@
 package ex0;
 
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
 
 public class Graph_Algo implements graph_algorithms{
 
@@ -12,7 +11,7 @@ public class Graph_Algo implements graph_algorithms{
     }
 
     public Graph_Algo() {
-
+        g = new Graph_DS();
     }
 
     @Override
@@ -25,13 +24,18 @@ public class Graph_Algo implements graph_algorithms{
         return new Graph_DS(this.g);
     }
 
+    /**
+     * This algorithm traverse the graph and check
+     * connectivity of all nodes.
+     * the algorithm use BFS method for graph traversal.
+     * @return TRUE if the graph is connected.
+     */
     @Override
     public boolean isConnected() {
         if(g.nodeSize() == 0 || g.nodeSize() == 1) return true;
         resetTags(0);
-        Queue<node_data> q = new ArrayBlockingQueue<>(g.nodeSize());
-        Iterator<node_data> it = g.getV().iterator();
-        node_data v = it.next();
+        Queue<node_data> q = new LinkedList<>();
+        node_data v = g.getV().iterator().next(); //pick some node
         v.setTag(1);
         q.add(v);
         while(!q.isEmpty()){
@@ -49,6 +53,7 @@ public class Graph_Algo implements graph_algorithms{
         return true;
     }
 
+    //reset all nodes....
     private void resetTags(int t) {
         for(node_data n: g.getV())
             n.setTag(t);
@@ -62,7 +67,7 @@ public class Graph_Algo implements graph_algorithms{
         if(a == null || b == null) return -1;
 
         resetTags(0);
-        Queue<node_data> q = new ArrayBlockingQueue<>(g.nodeSize());
+        Queue<node_data> q = new LinkedList<>();
         q.add(a);
         while(!q.isEmpty()){
             node_data v = q.remove();
@@ -86,7 +91,7 @@ public class Graph_Algo implements graph_algorithms{
         if(a == null || b == null) return null;
 
         resetTags(-1);
-        Queue<node_data> q = new ArrayBlockingQueue<>(g.nodeSize());
+        Queue<node_data> q = new LinkedList<>();
         List<node_data> path = new ArrayList<>();
         q.add(g.getNode(src));
         while(!q.isEmpty()){

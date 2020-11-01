@@ -9,16 +9,13 @@ import java.util.HashMap;
 public class NodeData implements node_data {
 
     private static int numOfVertices = 0;
-    private HashMap<Integer,node_data> ni;
-    private String info;
-    private int tag;
-    private int key;
+    private HashMap<Integer,node_data> ni = new HashMap<>();
+    private String info = "";
+    private int tag = 0;
+    private final int key ;
 
     public NodeData() {
-        ni = new HashMap<>();
-        info = "";
         key = numOfVertices++;
-        tag = 0;
     }
 
     /**
@@ -42,7 +39,7 @@ public class NodeData implements node_data {
 
     /**
      *
-     * @return
+     * @return A collection of all neighbors of this node
      */
     @Override
     public Collection<node_data> getNi() {
