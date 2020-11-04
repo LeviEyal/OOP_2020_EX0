@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
+ * eee
  * This class represent a node of an undirected and unweighted graph.
  * <p>The class implements the node_data interface.</p>
  * The class outlines a set of operations that can be operated on a graph's node.
